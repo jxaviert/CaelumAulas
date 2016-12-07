@@ -1,10 +1,12 @@
 package br.com.caelum.listaaluno;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +48,23 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        Button bt = (Button)findViewById(R.id.lista_alunos_floating_button);
+
+        bt.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                //Toast.makeText(ListaAlunosActivity.this, "Clicou", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ListaAlunosActivity.this,
+                        FormularioActivity.class);
+                startActivity(intent);
+
+            }
+
+            });
+
+
 
 
     }
