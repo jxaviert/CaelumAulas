@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
+import android.widget.Toast;
 
 
 public class FormularioActivity extends ActionBarActivity {
@@ -25,6 +25,9 @@ public class FormularioActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_ok) {
+
+            Aluno aluno = helper.pegaAlunoDoFormulario();
+            Toast.makeText(this,"Aluno: "+aluno.getNome(),Toast.LENGTH_LONG).show();
             finish();
         }
         return true;
