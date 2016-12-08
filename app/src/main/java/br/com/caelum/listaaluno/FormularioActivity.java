@@ -27,8 +27,15 @@ public class FormularioActivity extends ActionBarActivity {
         if (item.getItemId() == R.id.menu_ok) {
 
             Aluno aluno = helper.pegaAlunoDoFormulario();
-            Toast.makeText(this,"Aluno: "+aluno.getNome(),Toast.LENGTH_LONG).show();
-            finish();
+
+            AlunoDAO dao = new AlunoDAO(this);
+            dao.inserir(aluno);
+            dao.close();
+            //Toast.makeText(this,"Aluno: "+aluno.getNome(),Toast.LENGTH_LONG).show();
+           // finish();
+            //Toast.makeText(this,dao.ler(),Toast.LENGTH_LONG).show();
+
+            dao.close();
         }
         return true;
 
