@@ -35,11 +35,11 @@
     android:numStars="5"
     android:id="@+id/nota"
     android:layout_gravity="center"/>
-    <Button
+    <!--<Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Salvar"
-        android:id="@+id/botao_salvar"/>
+        android:id="@+id/botao_salvar"/>-->
 
 </LinearLayout>
 </ScrollView>

@@ -1,11 +1,35 @@
 package br.com.caelum.listaaluno;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class FormularioActivity extends AppCompatActivity {
+
+
+public class FormularioActivity extends ActionBarActivity {
+
+    private FormularioHelper helper;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_ok) {
+            finish();
+        }
+        return true;
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -13,16 +37,21 @@ public class FormularioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_formulario);
 
 
-        Button Salvar = (Button) findViewById(R.id.botao_salvar);
+        helper = new FormularioHelper(this);
+
+       /* Button Salvar = (Button) findViewById(R.id.botao_salvar);
 
         Salvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
-        });
+        });*/
+
 
 
     }
+
+
 
 }
