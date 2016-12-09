@@ -3,6 +3,8 @@ package br.com.caelum.listaaluno;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -36,6 +38,9 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         lista = (ListView) findViewById(R.id.lista_alunos);
 
+
+        registerForContextMenu(lista);
+
      //   ArrayAdapter<String> adapter =
        //         new ArrayAdapter<String>(this,
       //                  android.R.layout.simple_list_item_1,
@@ -59,7 +64,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
                 String aluno = lista.getItemAtPosition(posicao).toString();
                 Toast.makeText(ListaAlunosActivity.this, "Aluno clicado: "+aluno, Toast.LENGTH_SHORT).show();
-                return true;
+                return false;
             }
         });
 
@@ -77,6 +82,34 @@ public class ListaAlunosActivity extends AppCompatActivity {
             }
 
         });
+
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view,
+                                    ContextMenu.ContextMenuInfo menuInfo){
+
+        AdapterView.AdapterContextMenuInfo info =(AdapterView.AdapterContextMenuInfo) menuInfo;
+
+        final Aluno alunoSelecionado = (Aluno) lista.getAdapter().getItem(info.position);
+
+        MenuItem deletar = menu.add("Excluir");
+
+        deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
+            @Override
+            public boolean onMenuItemClick(MenuItem item){
+                AlunoDAO dao = new AlunoDAO(ListaAlunosActivity.this);
+                dao.deletar(alunoSelecionado);
+
+                dao.close();
+
+                carregaLista();
+
+                return false;
+            }
+
+        });
+
 
     }
 
