@@ -1,10 +1,12 @@
 package br.com.caelum.listaaluno;
 
+import java.io.Serializable;
+
 /**
  * Created by android6523 on 07/12/16.
  */
 
-public class Aluno {
+public class Aluno implements Serializable{
     private String nome;
     private String telefone;
     private String endereco;

@@ -2,6 +2,7 @@ package br.com.caelum.listaaluno;
 
 import android.app.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -29,7 +30,12 @@ public class FormularioActivity extends ActionBarActivity {
             Aluno aluno = helper.pegaAlunoDoFormulario();
 
             AlunoDAO dao = new AlunoDAO(this);
-            dao.inserir(aluno);
+            if(aluno.getId()==null){
+                dao.inserir(aluno);
+            }else{
+                dao.altera(aluno);
+            }
+
             dao.close();
             finish();
             //Toast.makeText(this,"Aluno: "+aluno.getNome(),Toast.LENGTH_LONG).show();
@@ -50,6 +56,15 @@ public class FormularioActivity extends ActionBarActivity {
 
 
         helper = new FormularioHelper(this);
+
+        Intent intent = getIntent();
+
+        Aluno aluno = (Aluno)intent.getSerializableExtra("aluno");
+        if(aluno != null) {
+
+            helper.colocaAlunoNoFormulario(aluno);
+        }
+
 
        /* Button Salvar = (Button) findViewById(R.id.botao_salvar);
 

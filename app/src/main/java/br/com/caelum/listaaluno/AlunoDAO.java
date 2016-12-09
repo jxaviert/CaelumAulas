@@ -60,6 +60,21 @@ public class AlunoDAO extends SQLiteOpenHelper {
 
     }
 
+    public void altera(Aluno aluno){
+        ContentValues values = new ContentValues();
+
+        values.put("nome",aluno.getNome());
+        values.put("endereco",aluno.getEndereco());
+        values.put("telefone",aluno.getTelefone());
+        values.put("site",aluno.getSite());
+        values.put("nota",aluno.getNota());
+
+
+        getWritableDatabase().update(tabela,values,"id=?",new String[]{aluno.getId().toString()});
+
+
+
+    }
 
     public List<Aluno> getLista(){
         List<Aluno> alunos = new ArrayList<Aluno>();

@@ -34,7 +34,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_alunos);
 
-        String [] alunos = {"Chaves","Quico","Chiquinha"};
+        final String [] alunos = {"Chaves","Quico","Chiquinha"};
 
         lista = (ListView) findViewById(R.id.lista_alunos);
 
@@ -51,7 +51,16 @@ public class ListaAlunosActivity extends AppCompatActivity {
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView<?> parent,View view,int posicao, long id){
 
-                Toast.makeText(ListaAlunosActivity.this, "Posição clicada: "+posicao, Toast.LENGTH_SHORT).show();
+                Aluno aluno = (Aluno)lista.getItemAtPosition(posicao);
+
+                Intent editar = new Intent(ListaAlunosActivity.this,FormularioActivity.class);
+                editar.putExtra("aluno",aluno);
+
+                startActivity(editar);
+
+
+
+               // Toast.makeText(ListaAlunosActivity.this, "Posição clicada: "+posicao, Toast.LENGTH_SHORT).show();
 
             }
         });

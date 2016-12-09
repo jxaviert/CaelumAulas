@@ -35,4 +35,14 @@ public class FormularioHelper {
         return aluno;
 
     }
+
+    public void colocaAlunoNoFormulario(Aluno _aluno){
+        aluno = _aluno;
+        nome.setText(aluno.getNome());
+        endereco.setText(aluno.getEndereco());
+        telefone.setText(aluno.getTelefone());
+        site.setText(aluno.getSite());
+        nota.setProgress(aluno.getNota().intValue());
+        //TODO COLOCAR AQUI O CÓDIGO
+    }
 }

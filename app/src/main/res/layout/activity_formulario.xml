@@ -32,6 +32,7 @@
 <RatingBar
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:progressTint="#26ff00"
     android:numStars="5"
     android:id="@+id/nota"
     android:layout_gravity="center"/>
