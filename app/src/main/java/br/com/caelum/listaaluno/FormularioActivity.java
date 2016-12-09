@@ -31,6 +31,7 @@ public class FormularioActivity extends ActionBarActivity {
             AlunoDAO dao = new AlunoDAO(this);
             dao.inserir(aluno);
             dao.close();
+            finish();
             //Toast.makeText(this,"Aluno: "+aluno.getNome(),Toast.LENGTH_LONG).show();
            // finish();
             //Toast.makeText(this,dao.ler(),Toast.LENGTH_LONG).show();

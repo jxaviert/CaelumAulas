@@ -11,7 +11,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class ListaAlunosActivity extends AppCompatActivity {
+
+    private ListView lista;
+
+    private void carregaLista(){
+        AlunoDAO dao = new AlunoDAO(this);
+        List<Aluno> alunos = dao.getLista();
+        dao.close();
+
+        ArrayAdapter<Aluno> adapter = new ArrayAdapter<Aluno>(
+        this,android.R.layout.simple_list_item_1,alunos);
+        lista.setAdapter(adapter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,14 +34,14 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         String [] alunos = {"Chaves","Quico","Chiquinha"};
 
-        final ListView lista = (ListView) findViewById(R.id.lista_alunos);
+        lista = (ListView) findViewById(R.id.lista_alunos);
 
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(this,
-                        android.R.layout.simple_list_item_1,
+     //   ArrayAdapter<String> adapter =
+       //         new ArrayAdapter<String>(this,
+      //                  android.R.layout.simple_list_item_1,
 
-                        alunos);
-        lista.setAdapter(adapter);
+      //                  alunos);
+      //  lista.setAdapter(adapter);
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView<?> parent,View view,int posicao, long id){
@@ -62,10 +76,14 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
             }
 
-            });
+        });
 
+    }
 
-
+    @Override
+    public void onResume(){
+       super.onResume();
+        carregaLista();
 
     }
 }
