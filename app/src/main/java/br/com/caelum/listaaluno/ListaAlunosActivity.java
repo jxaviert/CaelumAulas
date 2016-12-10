@@ -1,6 +1,8 @@
 package br.com.caelum.listaaluno;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -103,6 +105,44 @@ public class ListaAlunosActivity extends AppCompatActivity {
         final Aluno alunoSelecionado = (Aluno) lista.getAdapter().getItem(info.position);
 
         MenuItem deletar = menu.add("Excluir");
+        //TODO COLOCAR TODAS AS OPÇÕES
+
+        MenuItem abrirMapa = menu.add("Abrir mapa");
+        Intent mapa = new Intent(Intent.ACTION_VIEW);
+        mapa.setData(Uri.parse("geo:0,0?z=14&q="+Uri.encode(alunoSelecionado.getEndereco())));
+        abrirMapa.setIntent(mapa);
+
+        MenuItem menuLigar = menu.add("Ligar");
+        Intent ligar = new Intent(Intent.ACTION_CALL);
+        ligar.setData(Uri.parse("tel: "+ alunoSelecionado.getTelefone()));
+        menuLigar.setIntent(ligar);
+
+        MenuItem menuSms = menu.add("SMS");
+        Intent enviarSMS = new Intent(Intent.ACTION_VIEW);
+        enviarSMS.setData(Uri.parse("sms: "+ alunoSelecionado.getTelefone()));
+        enviarSMS.putExtra("sms_body","Olá mundo");
+        menuSms.setIntent(enviarSMS);
+
+        MenuItem menuSite = menu.add("Abrir site");
+        Intent site = new Intent(Intent.ACTION_VIEW);
+        site.setData(Uri.parse("http://"+ alunoSelecionado.getSite()));
+        menuSite.setIntent(site);
+
+
+
+
+       /* menuLigar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
+            @Override
+            public boolean onMenuItemClick(MenuItem item){
+                Intent ligar = new Intent(Intent.ACTION_CALL);
+                ligar.setData(Uri.parse("tel: "+ alunoSelecionado.getTelefone()));
+                return false;
+            }
+
+        });*/
+
+
+
 
         deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
             @Override
