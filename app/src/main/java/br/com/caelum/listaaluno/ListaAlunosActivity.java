@@ -1,8 +1,11 @@
 package br.com.caelum.listaaluno;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -19,7 +22,9 @@ import java.util.List;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 
+    private static final int REQUEST_LIGAR = 1;
     private ListView lista;
+    private Aluno alunoSelecionado;
 
     private void carregaLista(){
         AlunoDAO dao = new AlunoDAO(this);
@@ -27,7 +32,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         dao.close();
 
         ArrayAdapter<Aluno> adapter = new ArrayAdapter<Aluno>(
-        this,android.R.layout.simple_list_item_1,alunos);
+                this,android.R.layout.simple_list_item_1,alunos);
         lista.setAdapter(adapter);
     }
 
@@ -43,12 +48,12 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         registerForContextMenu(lista);
 
-     //   ArrayAdapter<String> adapter =
-       //         new ArrayAdapter<String>(this,
-      //                  android.R.layout.simple_list_item_1,
+        //   ArrayAdapter<String> adapter =
+        //         new ArrayAdapter<String>(this,
+        //                  android.R.layout.simple_list_item_1,
 
-      //                  alunos);
-      //  lista.setAdapter(adapter);
+        //                  alunos);
+        //  lista.setAdapter(adapter);
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView<?> parent,View view,int posicao, long id){
@@ -62,7 +67,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
 
 
-               // Toast.makeText(ListaAlunosActivity.this, "Posição clicada: "+posicao, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(ListaAlunosActivity.this, "Posição clicada: "+posicao, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -89,33 +94,24 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 Intent intent = new Intent(ListaAlunosActivity.this,
                         FormularioActivity.class);
                 startActivity(intent);
-
             }
-
         });
-
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View view,
-                                    ContextMenu.ContextMenuInfo menuInfo){
+                                    ContextMenu.ContextMenuInfo menuInfo) {
 
-        AdapterView.AdapterContextMenuInfo info =(AdapterView.AdapterContextMenuInfo) menuInfo;
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
-        final Aluno alunoSelecionado = (Aluno) lista.getAdapter().getItem(info.position);
+        alunoSelecionado = (Aluno) lista.getAdapter().getItem(info.position);
 
         MenuItem deletar = menu.add("Excluir");
-        //TODO COLOCAR TODAS AS OPÇÕES
 
         MenuItem abrirMapa = menu.add("Abrir mapa");
         Intent mapa = new Intent(Intent.ACTION_VIEW);
-        mapa.setData(Uri.parse("geo:0,0?z=14&q="+Uri.encode(alunoSelecionado.getEndereco())));
+        mapa.setData(Uri.parse("geo:0,0?z=14&q=" + Uri.encode(alunoSelecionado.getEndereco())));
         abrirMapa.setIntent(mapa);
-
-        MenuItem menuLigar = menu.add("Ligar");
-        Intent ligar = new Intent(Intent.ACTION_CALL);
-        ligar.setData(Uri.parse("tel: "+ alunoSelecionado.getTelefone()));
-        menuLigar.setIntent(ligar);
 
         MenuItem menuSms = menu.add("SMS");
         Intent enviarSMS = new Intent(Intent.ACTION_VIEW);
@@ -127,6 +123,59 @@ public class ListaAlunosActivity extends AppCompatActivity {
         Intent site = new Intent(Intent.ACTION_VIEW);
         site.setData(Uri.parse("http://"+ alunoSelecionado.getSite()));
         menuSite.setIntent(site);
+
+        deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
+            @Override
+            public boolean onMenuItemClick(MenuItem item){
+                AlunoDAO dao = new AlunoDAO(ListaAlunosActivity.this);
+                dao.deletar(alunoSelecionado);
+                dao.close();
+                carregaLista();
+
+                return false;
+            }
+        });
+
+        MenuItem menuLigar = menu.add("Ligar");
+        menuLigar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                String permissaoLigar = Manifest.permission.CALL_PHONE;
+                if (ActivityCompat.checkSelfPermission(ListaAlunosActivity.this, permissaoLigar)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    fazerLigacao();
+                } else {
+                    ActivityCompat.requestPermissions(ListaAlunosActivity.this, new String[]{permissaoLigar}, REQUEST_LIGAR);
+                }
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String[] permissoes,int[]resultados) {
+        if (requestCode == REQUEST_LIGAR) {
+            if (resultados[0] == PackageManager.PERMISSION_GRANTED) {
+                fazerLigacao();
+            } else {
+                Toast.makeText(this, "Não tem permissão", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    @SuppressWarnings({"MissingPermission"})
+    private void fazerLigacao(){
+        Intent ligar = new Intent(Intent.ACTION_CALL);
+        ligar.setData(Uri.parse("tel: "+alunoSelecionado.getTelefone()));
+
+        startActivity(ligar);
+    }
+
+
+        /*Intent ligar = new Intent(Intent.ACTION_CALL);
+        ligar.setData(Uri.parse("tel: "+ alunoSelecionado.getTelefone()));
+        menuLigar.setIntent(ligar);*/
+
+
 
 
 
@@ -142,29 +191,9 @@ public class ListaAlunosActivity extends AppCompatActivity {
         });*/
 
 
-
-
-        deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
-            @Override
-            public boolean onMenuItemClick(MenuItem item){
-                AlunoDAO dao = new AlunoDAO(ListaAlunosActivity.this);
-                dao.deletar(alunoSelecionado);
-
-                dao.close();
-
-                carregaLista();
-
-                return false;
-            }
-
-        });
-
-
-    }
-
     @Override
     public void onResume(){
-       super.onResume();
+        super.onResume();
         carregaLista();
 
     }
