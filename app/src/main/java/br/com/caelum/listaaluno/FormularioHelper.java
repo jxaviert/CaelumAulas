@@ -24,12 +24,16 @@ public class FormularioHelper {
 
     private Aluno aluno;
 
+
     public FormularioHelper(FormularioActivity activity){
         nome = (EditText) activity.findViewById(R.id.nome);
         telefone = (EditText) activity.findViewById(R.id.telefone);
         endereco = (EditText) activity.findViewById(R.id.endereco);
         site    = (EditText) activity.findViewById(R.id.site);
         nota = (RatingBar) activity.findViewById(R.id.nota);
+
+        botaoFoto   = (Button) activity.findViewById(R.id.formulario_foto_button);
+        foto        = (ImageView) activity.findViewById(R.id.foto);
 
         aluno = new Aluno();
 
@@ -57,6 +61,7 @@ public class FormularioHelper {
 
     public Button getBotaoFoto(){
         //TODO COLOCAR O CÓDIGO DO BOTÃO
+
         return botaoFoto;
 
     }

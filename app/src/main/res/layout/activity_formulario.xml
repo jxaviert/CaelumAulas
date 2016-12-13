@@ -12,12 +12,13 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/foto"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:id="@+id/foto"
                 android:src="@drawable/person"
                 android:background="#00A8EC"/>
             <Button
+                android:id="@+id/formulario_foto_button"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:background="@drawable/botao_foto"
