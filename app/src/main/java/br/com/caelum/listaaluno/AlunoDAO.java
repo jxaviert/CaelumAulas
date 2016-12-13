@@ -30,6 +30,7 @@ public class AlunoDAO extends SQLiteOpenHelper {
                   +"telefone text, "
                   +"endereco text, "
                   +"site text, "
+                    +"caminhoFoto text,"
                   +"nota real);";
         db.execSQL(sql);
     }

@@ -55,6 +55,9 @@ public class FormularioHelper {
         telefone.setText(aluno.getTelefone());
         site.setText(aluno.getSite());
         nota.setProgress(aluno.getNota().intValue());
+        if(aluno.getCaminhoFoto()!= null){
+            carregaImagem(aluno.getCaminhoFoto());
+        }
         //TODO COLOCAR AQUI O CÓDIGO
     }
 
@@ -73,5 +76,6 @@ public class FormularioHelper {
         foto.setImageBitmap(bmFotoReduzida);
         foto.setScaleType(ImageView.ScaleType.FIT_XY);
         foto.setTag(caminhoFoto);
+
     }
 }
