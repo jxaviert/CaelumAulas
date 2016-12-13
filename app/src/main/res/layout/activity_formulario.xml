@@ -27,7 +27,6 @@
                 android:layout_marginRight="5dp"
                 android:gravity="center"/>
 
-
         </RelativeLayout>
 
         <EditText

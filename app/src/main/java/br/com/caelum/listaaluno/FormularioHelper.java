@@ -1,6 +1,10 @@
 package br.com.caelum.listaaluno;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 
 /**
@@ -13,6 +17,10 @@ public class FormularioHelper {
     private EditText endereco;
     private EditText site;
     private RatingBar nota;
+    private ImageView foto;
+    private Button botaoFoto;
+
+
 
     private Aluno aluno;
 
@@ -44,5 +52,21 @@ public class FormularioHelper {
         site.setText(aluno.getSite());
         nota.setProgress(aluno.getNota().intValue());
         //TODO COLOCAR AQUI O CÓDIGO
+    }
+
+
+    public Button getBotaoFoto(){
+        //TODO COLOCAR O CÓDIGO DO BOTÃO
+        return botaoFoto;
+
+    }
+
+    public void carregaImagem(String caminhoFoto){
+        Bitmap bmFoto = BitmapFactory.decodeFile(caminhoFoto);
+        Bitmap bmFotoReduzida = Bitmap.createScaledBitmap(bmFoto, bmFoto.getWidth(),300,true);
+
+        foto.setImageBitmap(bmFotoReduzida);
+        foto.setScaleType(ImageView.ScaleType.FIT_XY);
+        foto.setTag(caminhoFoto);
     }
 }
