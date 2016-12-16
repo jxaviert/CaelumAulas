@@ -56,6 +56,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 String json = new AlunoConverter().toJson(alunos);
                 Toast.makeText(this,json, Toast.LENGTH_LONG).show();
                 return true;
+            case R.id.menu_receber_provas:
+                Intent prov = new Intent(this, ProvasActivity.class);
+                startActivity(prov);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -51,7 +51,12 @@ public class ListaProvaFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapter, View view, int posicao, long id) {
                 Prova selecionada = (Prova) adapter.getItemAtPosition(posicao);
 
-                Toast.makeText(getActivity(), "Prova selecionada: " + selecionada, Toast.LENGTH_LONG).show();
+                ProvasActivity calendarioProvas = (ProvasActivity)getActivity();
+                calendarioProvas.selecionaProva(selecionada);
+
+               // ((ProvasActivity)getActivity()).selecionaProva(selecionada);
+
+               // Toast.makeText(getActivity(), "Prova selecionada: " + selecionada, Toast.LENGTH_LONG).show();
             }
         });
 
