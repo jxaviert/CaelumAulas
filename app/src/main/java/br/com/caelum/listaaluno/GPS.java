@@ -6,6 +6,7 @@ import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -43,7 +44,9 @@ public class GPS implements GoogleApiClient.ConnectionCallbacks, LocationListene
     @Override
     public void onLocationChanged(Location location) {
 
-            activity.centralizaNO(new LatLng(location.getLatitude(), location.getLongitude()));
+        Toast.makeText(activity, "Teste", Toast.LENGTH_SHORT).show();
+        
+        activity.centralizaNO(new LatLng(location.getLatitude(), location.getLongitude()));
     }
 
 

@@ -16,6 +16,7 @@ import java.util.List;
 public class MostraAlunosActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private GPS teste;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,8 @@ public class MostraAlunosActivity extends FragmentActivity implements OnMapReady
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        GPS gps = new GPS(this);
+
+
 
         AlunoDAO dao = new AlunoDAO(this);
         List<Aluno> alunos = dao.getLista();
@@ -60,6 +62,7 @@ public class MostraAlunosActivity extends FragmentActivity implements OnMapReady
             centralizaNO(coordenada);
 
         }
+        teste = new GPS(this);
 
     }
 
